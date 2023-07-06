@@ -1,5 +1,5 @@
 <template>
-	<view class="list">
+	<view>
 		<view class="flexbg" :style="{'background-image':'url('+ playlist.coverImgUrl +')'}"></view>
 		<musichead title="歌单" :icon="true" color="white"></musichead>
 		<view class="container" >

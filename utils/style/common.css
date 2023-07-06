@@ -1,0 +1,13 @@
+.common{
+	position: absolute;
+	left: 33%;
+	width: 30%;
+	height: 95%;
+	margin: 6px 10px;
+	border-style:solid;
+	border-radius: 11px;
+	border-color: #696969;
+	text-align: center;
+	background-color: rgb(237, 236, 236);
+}
+

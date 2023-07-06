@@ -1,8 +1,8 @@
 <template>
 	<view class="common">
-		<view class="index-header">
-			<musichead title="Like-Music" :icon="false" color="#5b5b5b" :values = "values"></musichead>
-				<image class="searchIcon" src="../../utils/static/searchIcon.png"></image>
+		<view class="playlist-header">
+			<musichead title="歌单" :icon="true" color="white" :values="values"></musichead>
+			<view class="playlist-title">{{this.playlistInfo.playlistName}}</view>
 		</view>
 		<view>
 			<scroll-view :scroll-top="0" scroll-y="true" show-scrollbar=true class="scroll-Y">
@@ -17,14 +17,7 @@
 				</view>
 			</scroll-view>
 		</view>
-		<view class="navigation-buttom">
-			<view>
-				<image class="navigation-buttom-item1" src="../../utils/static/indexLight.png"></image>
-			</view>
-			<view @click="handleToUser">
-				<image class="navigation-buttom-item2" src="../../utils/static/user.png"></image>
-			</view>
-		</view>
+
 	</view>
 </template>
 
@@ -32,13 +25,17 @@
 	import musichead from '../../components/musichead/musichead.vue'
 	import '../../common/iconfont.css'
 	import {
-		song,
+		playlist,
+		song
 	} from '@/utils/CompassUtil.js'
 	export default {
 		data() {
 			return {
 				dataList: [],
-				playlistId: 1, //歌单id
+				playlistInfo: {
+					playlistId: 1, //歌单id
+					playlistName: "" //歌单名
+				},
 				values: {
 					username: "", //用户名
 					usernameid: 1 //用户id
@@ -49,66 +46,41 @@
 			musichead
 		},
 		onLoad(object) {
+			this.playlistInfo.playlistId = object.playlistId
+			this.playlistInfo.playlistName = object.playlistName
 			this.values.username = object.username
 			this.values.usernameid = object.usernameid
+			console.log("playlistId = " + this.playlistInfo.playlistId)
 			uni.showLoading({
 					title: '加载中...'
 				}),
-				song.getAllSongInfo().then((res) => {
-					console.log(res);
+				song.getAllSongByPlaylistId(this.playlistInfo.playlistId).then((res) => {
 					this.dataList = res[1].data.resData;
 					console.log(this.datalist);
 					uni.hideLoading();
 				})
 		},
 		methods: {
-			handleToUser() {
-				uni.navigateTo({
-					url: '/pages/user/user?username=' + this.values.username + "&usernameid=" + this.values.usernameid
-				});
-			},
 			handleToMusic(value) {
 				console.log(value)
 				uni.navigateTo({
 					url: '/pages/music/music?username=' + this.values.username + "&usernameid=" + this.values.usernameid +"&title=" + value.currentTarget.dataset.id
 				});
 			},
-
 		}
 	}
 </script>
 
 <style scoped>
-	.common {
-		background-color: rgb(237, 236, 236);
-	}
-
-	.index-search {
-		border-style: solid;
-		border-radius: 10px;
-		margin: 20px 20px;
-	}
-
-	.searchIcon {
-		display: flex;
-		margin: auto;
-		top: 10px;
-		border-style: solid;
-		border-width: 1.5px;
-		border-radius: 30px;
-		width: 240px;
-		height: 30px;
-		border-color: #5b5b5b;
-	}
-
-	.index-header {
+	.playlist-header {
 		position: relative;
 		width: 100%;
 		height: 25%;
+		background-color: rgb(108, 112, 106);
 		border-radius: 7px 7px 0px 0px;
 	}
 
-	.index-title {
+	.playlist-title {
 		margin-top: 20px;
 		font-size: 25px;
 		text-align: center;
@@ -156,33 +128,6 @@
 	}
 
 	.scroll-Y {
-		height: 420px;
-	}
-
-	.navigation-buttom {
-		display: flex;
-		position: absolute;
-		border-top-style: solid;
-		border-top-color: #878787;
-		left: 5%;
-		width: 90%;
-		height: 13%;
-		bottom: 0%;
-	}
-
-	.navigation-buttom-item1 {
-		position: absolute;
-		margin-top: 18px;
-		left: 18%;
-		width: 45px;
-		height: 60px;
-	}
-
-	.navigation-buttom-item2 {
-		position: absolute;
-		margin-top: 18px;
-		right: 18%;
-		width: 45px;
-		height: 60px;
+		height: 510px;
 	}
 </style>

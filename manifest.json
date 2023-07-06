@@ -93,23 +93,19 @@
     "vueVersion" : "2",
 	"h5" : {
 		//跨域配置
-		"devServer" : {
+		"devServer": {
 			"https" : false,
-			"port": 8080,
+			"port": 8080,//前端运行端口
 			"disableHostCheck": true,
-			"proxy":{
-				"/api": {              
-					"target":"http://192.168.11.214:8090",
-					"changeOrigin": true,//是否跨域
-                    "secure" : false,
-					"pathRewrite":{
-						"^/api": ""
-					}
-				}
-			}
-		},
-		"router" : {
-		  "base" : "./"
+		    "proxy": {
+		        "/api": {
+		          "target":"http://192.168.137.1:8090",//后端运行url
+		          "changeOrigin": true,
+		          "pathRewrite": {
+		            "^/api": "/"
+		          }
+		        }
+		      }
+		    }
 		}
-	  }
 }

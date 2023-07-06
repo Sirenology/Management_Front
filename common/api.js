@@ -1,6 +1,6 @@
 import {
 	baseUrl,
-} from './config.js';
+} from '@/utils/config.js';
 /**
  * 歌曲榜单
  * 跨域访问

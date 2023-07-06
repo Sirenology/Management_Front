@@ -10,6 +10,7 @@
 </script>
 
 <style>
+	@import url("utils/style/common.css");
 	/*每个页面公共css */
 	.container {
 		width: 100%;
